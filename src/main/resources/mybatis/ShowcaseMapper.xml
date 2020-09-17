@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.green.bespoke.mapper.ShowcaseMapper">
+			  
+  <!-- Search Creiteria  -->
+   <sql id="search">
+  	<choose>
+		<when test="searchType=='li'.toString()">
+			and id like '________') ORDER BY id DESC 
+		</when>  	
+		<when test="searchType=='y'.toString()">
+			and title like CONCAT(CONCAT('%',#{keyword}),'%')) ORDER BY title
+		</when>  	
+		<when test="searchType=='a'.toString()">
+			and author like CONCAT(CONCAT('%',#{keyword}),'%')) ORDER BY author DESC 
+		</when>  	
+		<when test="searchType=='i'.toString()">
+			and id like CONCAT(CONCAT('%',#{keyword}),'%')) ORDER BY id 
+		</when>
+		<when test="searchType=='c'.toString()">
+			and content like CONCAT(CONCAT('%',#{keyword}),'%')) ORDER BY content 
+		</when>  	
+		<when test="searchType=='fc'.toString()">
+			and fabric_content like CONCAT(CONCAT('%',#{keyword}),'%')) ORDER BY fabric_content 
+		</when>  						  	
+		<when test="searchType=='dont'.toString()">
+			and hp_no like CONCAT(CONCAT('%',#{keyword}),'%')
+			or cp_no like CONCAT(CONCAT('%',#{keyword}),'%')
+			or bzp_no like CONCAT(CONCAT('%',#{keyword}),'%')
+			or fax_no like CONCAT(CONCAT('%',#{keyword}),'%')) ORDER BY last_edit_day DESC 
+		</when>
+		<when test="searchType=='what'.toString()">
+			and home_adrs like CONCAT(CONCAT('%',#{keyword}),'%')
+			or home_adrsd like CONCAT(CONCAT('%',#{keyword}),'%')
+			or bz_adrs like CONCAT(CONCAT('%',#{keyword}),'%')
+			or bz_adrs like CONCAT(CONCAT('%',#{keyword}),'%')) ORDER BY home_adrs ASC , bz_adrs ASC 
+		</when>
+		
+		<when test="searchType=='led'.toString()">
+			and modified_date BETWEEN CONCAT(#{fromDate},' 00:00:00') AND CONCAT(#{toDate},' 23:59:59')) ORDER BY modified_date DESC  
+			<!-- and last_edit_day BETWEEN '2016-04-04 00:00:00' AND '2020-04-04 00:00:00') -->
+		</when>
+		<otherwise>
+		)
+		</otherwise>
+  	</choose>
+  </sql>				  
+
+  
+  <select id="searchRowCount" resultType="int">
+		select count(*) from bespoke.showcase_board where (id is not NULL
+	 	<include refid="search"></include>
+  </select>
+    <select id="searchList" resultType="com.green.bespoke.vo.ShowcaseVO">
+	 	SELECT id,author,title,content,category,count,created_date createdDate,modified_date modifiedDate,last_editor lastEditor,work,brand,featured_image featuredImage,
+	 	visual,customer_age customerAge,body_type bodyType,manufactured_date manufacturedDate,lapel_width lapelWidth,lapel,breasted,button,pocket,sleeve_length sleeveLength,slit,lining,stiching,
+	 	extra_design extraDesign,fabric_post_id fabricPostId,fabric_content fabricContent,fabric_pattern fabricPattern FROM bespoke.showcase_board WHERE(id is not NULL 
+	 	<include refid="search"></include>
+	 	LIMIT #{sNo}, #{perPageRow}
+  </select>				  
+
+	<select id="selectOne" resultType="com.green.bespoke.vo.ShowcaseVO">
+		SELECT id,author,title,content,category,count,created_date createdDate,modified_date modifiedDate,last_editor lastEditor,work,brand,featured_image featuredImage,
+	 	visual,customer_age customerAge,body_type bodyType,manufactured_date manufacturedDate,lapel_width lapelWidth,lapel,breasted,button,pocket,sleeve_length sleeveLength,slit,lining,stiching,
+	 	extra_design extraDesign,fabric_post_id fabricPostId,fabric_content fabricContent,fabric_pattern fabricPattern from bespoke.showcase_board WHERE (id is not NULL and id=#{id})
+	</select>
+	<select id="selectOneLast" resultType="com.green.bespoke.vo.ShowcaseVO">
+		SELECT id,author,title,content,category,count,created_date createdDate,modified_date modifiedDate,last_editor lastEditor,work,brand,featured_image featuredImage,
+	 	visual,customer_age customerAge,body_type bodyType,manufactured_date manufacturedDate,lapel_width lapelWidth,lapel,breasted,button,pocket,sleeve_length sleeveLength,slit,lining,stiching,
+	 	extra_design extraDesign,fabric_post_id fabricPostId,fabric_content fabricContent,fabric_pattern fabricPattern from bespoke.showcase_board order by createdDate limit 1
+	</select>
+	<select id="selectMaxId" resultType="com.green.bespoke.vo.ShowcaseVO">
+		SELECT max(id) id from bespoke.showcase_board
+	</select>
+	<select id="lastC_id" resultType="String">
+ 		SELECT MAX(c_id) From bespoke.customer Where (c_id like '________');
+	</select>
+
+	<update id="update" >
+		UPDATE bespoke.showcase_board
+		SET author=#{author},title=#{title},content=#{content},created_date=#{createdDate},	modified_date=#{modifiedDate},last_editor=#{lastEditor},work=#{work},brand=#{brand},featured_image=#{featuredImage},visual=#{visual},customer_age=#{customerAge},body_type=#{bodyType},manufactured_date=#{manufacturedDate},lapel_width=#{lapelWidth},lapel=#{lapel},breasted=#{breasted},button=#{button},pocket=#{pocket},sleeve_length=#{sleeveLength},slit=#{slit},lining=#{lining},stiching=#{stiching},extra_design=#{extraDesign},fabric_post_id=#{fabricPostId},fabric_content=#{fabricContent},fabric_pattern=#{fabricPattern}
+		WHERE (id=#{id})
+	</update>
+	<insert id="insert"> 
+        INSERT INTO bespoke.showcase_board (author,created_date,featured_image)
+        VALUES (#{author},#{createdDate},#{featuredImage}) 
+    </insert>
+    <!-- junit -->
+ 	<insert id="insertAll"> 
+        INSERT INTO bespoke.showcase_board (author,title,content,created_date,modified_date,last_editor,work,brand,featured_image,visual,customer_age,body_type,manufactured_date,lapel_width,lapel,breasted,button,pocket,sleeve_length,slit,lining,stiching,extra_design,fabric_post_id,fabric_content,fabric_pattern)
+        VALUES (#{author},#{title},#{content},#{createdDate},#{modifiedDate},#{lastEditor},#{work},#{brand},#{featuredImage},#{visual},#{customerAge},#{bodyType},#{manufacturedDate},#{lapelWidth},#{lapel},#{breasted},#{button},#{pocket},#{sleeveLength},#{slit},#{lining},#{stiching},#{extraDesign},#{fabricPostId},#{fabricContent},#{fabricPattern}) 
+    </insert>
+
+	  <!-- customerDelete -->
+	  <delete id="delete">
+			delete from bespoke.customer where c_id=#{c_id}
+	  </delete>
+	  
+</mapper>

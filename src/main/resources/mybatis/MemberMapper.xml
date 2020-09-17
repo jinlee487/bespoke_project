@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.green.bespoke.mapper.MemberMapper">
+			  
+  <!-- Search Creiteria  -->
+   <sql id="search">
+  	<choose>
+		<when test="searchType=='na'.toString()">
+			and name like CONCAT(CONCAT('%',#{keyword}),'%')) ORDER BY name 
+		</when>  	
+		<when test="searchType=='i'.toString()">
+			and c_id like CONCAT(CONCAT('%',#{keyword}),'%')) ORDER BY c_id DESC 
+		</when>
+		<when test="searchType=='e'.toString()">
+			and email like CONCAT(CONCAT('%',#{keyword}),'%')) ORDER BY email DESC 
+		</when> 
+		<when test="searchType=='ro'.toString()">
+			and role like CONCAT(CONCAT('%',#{keyword}),'%')) ORDER BY name DESC 
+		</when> 
+		<when test="searchType=='pn'.toString()">
+			and phone_number like CONCAT(CONCAT('%',#{keyword}),'%')
+			ORDER BY name DESC 
+		</when>
+		<otherwise>
+		)
+		</otherwise>
+  	</choose>
+  </sql>				  
+
+  <select id="searchRowCount" resultType="int">
+		select count(*) from bespoke.member_table where (email is not NULL
+	 	<include refid="search"></include>
+  </select>
+  
+  <select id="searchList" resultType="com.green.bespoke.vo.MemberVO">
+	 	SELECT id,email,name,phone_number,birth,c_id,role,social,modified_date FROM bespoke.member_table WHERE(email is not NULL 
+	 	<include refid="search"></include>
+	 	LIMIT #{sNo}, #{perPageRow}
+  </select>				  
+
+  <select id="requestList" resultType="com.green.bespoke.vo.MemberVO">
+	 	SELECT id,email,name,phone_number,birth,c_id,role,request,modified_date FROM bespoke.member_table 
+	 	WHERE(email is not NULL and request = 'T') ORDER BY modified_date 
+	 	LIMIT #{sNo}, #{perPageRow}
+  </select>				  
+
+
+	<update id="update" >
+		UPDATE bespoke.member_table
+		SET name=#{name},email=#{email},phone_number=#{phone_number},birth=#{birth},c_id=#{c_id},modified_date=CURRENT_TIMESTAMP,role=#{role},request=#{request} 
+		WHERE (id=#{id})
+	</update>
+
+</mapper>

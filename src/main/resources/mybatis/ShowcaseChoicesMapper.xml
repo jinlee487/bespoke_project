@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.green.bespoke.mapper.ShowcaseChoicesMapper">
+
+	<select id="selectListWork" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT work from bespoke.showcase_work
+	</select>
+	<select id="selectListBrand" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT brand from bespoke.showcase_brand
+	</select>
+	<select id="selectListAge" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT age from bespoke.showcase_age
+	</select>	
+	<select id="selectListBodyType" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT body_type bodyType from bespoke.showcase_body_type
+	</select>	
+	<select id="selectListFabricPattern" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT fabric_pattern fabricPattern from bespoke.showcase_fabric_pattern
+	</select>
+	<select id="selectListLapelWidth" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT lapel_width lapelWidth from bespoke.showcase_lapel_width
+	</select>
+	<select id="selectListLapel" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT lapel from bespoke.showcase_lapel
+	</select>
+	<select id="selectListPocket" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT pocket from bespoke.showcase_pocket
+	</select>
+	<select id="selectListSleeveLength" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT sleeve_length sleeveLength from bespoke.showcase_sleeve_length
+	</select>
+	<select id="selectListSlit" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT slit from bespoke.showcase_slit
+	</select>
+	<select id="selectListStiching" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT stiching from bespoke.showcase_stiching
+	</select>
+	<select id="selectListExtraDesign" resultType="com.green.bespoke.vo.ShowcaseChoicesVO">
+		SELECT extra_design extraDesign from bespoke.showcase_extra_design
+	</select>	  
+</mapper>

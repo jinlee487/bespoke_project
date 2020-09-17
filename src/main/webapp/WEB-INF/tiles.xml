@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<!-- main -->
+	<definition name="main-layout" template="/WEB-INF/views/layout/main/base-main.jsp">
+	    <put-attribute name="header" value="/WEB-INF/views/layout/main/header.jsp" />
+	    <put-attribute name="body" value=""  />
+	    <put-attribute name="footer" value="/WEB-INF/views/layout/main/footer.jsp" />
+	</definition>
+	<definition name="/main/*" extends="main-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/main/{1}.jsp" />
+	</definition>
+	<definition name="/main/*/*" extends="main-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/main/{1}/{2}.jsp" />
+	</definition>
+	<definition name="/main/*/*/*" extends="main-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/main/{1}/{2}/{3}.jsp" />
+	</definition>
+	<definition name="/main/*/*/*/*" extends="main-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/main/{1}/{2}/{3}/{4}.jsp" />
+	</definition>
+	<definition name="/main/*/*/*/*/*" extends="main-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/main/{1}/{2}/{3}/{4}/{5}.jsp" />
+	</definition>
+	<definition name="/information/*" extends="main-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/information/{1}.jsp" />
+	</definition>
+   
+
+	<!--  sub  Tiles 미적용 페이지들 -->
+	<definition name="no-tiles" template="/WEB-INF/views/layout/noTemplate.jsp">
+	    <put-attribute name="body" value=""  />
+	</definition>
+	<definition name="/notiles/*" extends="no-tiles">
+	    <put-attribute name="body" value="/WEB-INF/views/notiles/{1}.jsp" />
+	</definition>
+	<definition name="/notiles/*/*" extends="no-tiles">
+	    <put-attribute name="body" value="/WEB-INF/views/notiles/{1}/{2}.jsp" />
+	</definition>
+	<definition name="/notiles/*/*/*" extends="no-tiles">
+	    <put-attribute name="body" value="/WEB-INF/views/notiles/{1}/{2}/{3}.jsp" />
+	</definition>
+
+	
+	<!-- admin -->
+	<definition name="admin-layout" template="/WEB-INF/views/layout/admin/admin-base-main.jsp">
+	    <put-attribute name="header" value="/WEB-INF/views/layout/admin/admin-header.jsp" />
+	    <put-attribute name="sidemenu" value="/WEB-INF/views/layout/admin/admin-sidemenu.jsp" />
+	    <put-attribute name="body" value=""  />
+	    <put-attribute name="footer" value="/WEB-INF/views/layout/admin/admin-footer.jsp" />
+	</definition>
+	<definition name="/admin/*" extends="admin-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/admin/{1}.jsp" />
+	</definition>
+	<definition name="/admin/*/*" extends="admin-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/admin/{1}/{2}.jsp" />
+	</definition>
+	<definition name="/admin/*/*/*" extends="admin-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/admin/{1}/{2}/{3}.jsp" />
+	</definition>
+	
+	<!-- help -->
+	<definition name="help-layout" template="/WEB-INF/views/layout/help/help-base-main.jsp">
+	    <put-attribute name="header" value="/WEB-INF/views/layout/help/help-header.jsp" />
+	    <put-attribute name="sidemenu" value="/WEB-INF/views/layout/help/help-sidemenu.jsp" />
+	    <put-attribute name="body" value=""  />
+	    <put-attribute name="footer" value="/WEB-INF/views/layout/help/help-footer.jsp" />
+	</definition>
+	<definition name="/help/*" extends="help-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/help/{1}.jsp" />
+	</definition>
+	<definition name="/help/*/*" extends="help-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/help/{1}/{2}.jsp" />
+	</definition>
+	<definition name="/help/*/*/*" extends="help-layout">
+	    <put-attribute name="body" value="/WEB-INF/views/help/{1}/{2}/{3}.jsp" />
+	</definition>
+   
+</tiles-definitions>
